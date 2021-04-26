@@ -1,0 +1,80 @@
+---
+title: "ASSIGNMENT 4"
+author: "Wyatt Rasmussen"
+date: '2021-04-25'
+output:
+  html_document: default
+  word_document: default
+  pdf_document: default
+bibliography: bibliography.bib
+---
+
+# Markdown Basics
+
+## Favorite Foods
+My favorite foods are:        
+* Tacos       
+* Pizza       
+* Pulled Pork       
+
+## Images
+![A picture of Wyatt](https://image.shutterstock.com/z/stock-photo-planet-earth-with-face-mask-protect-world-medical-concept-elements-of-this-image-furnished-by-1669328053.jpg)
+
+## Add a Quote
+An inspirational quote is:  
+> If your dreams don't scare you they are too small
+
+## Add an Equation
+$$ e = mc^2 $$
+
+## Add a Footnote
+^[This is a footnote]
+
+## Add Citations
+@lander2017  
+**R for Everyone**  
+
+@fieldmilesfield2012   
+**Discovering Statistics Using R**
+
+# Inline Code
+
+## NY Times COVID-19 Data
+```{r}
+library(ggplot2)
+covid_df <- read.csv("nytimes/covid-19-data/us-states.csv")
+california_df <- covid_df[ which( covid_df$state == "California"), ]
+ny_df <- covid_df[ which( covid_df$state == "New York"), ]
+florida_df <- covid_df[ which( covid_df$state == "Florida"), ]
+ggplot(data=florida_df, aes(x=date, group=1)) +
+  geom_line(aes(y = cases, colour = "Florida")) +
+  geom_line(data=ny_df, aes(y = cases,colour="New York")) +
+  geom_line(data=california_df, aes(y = cases, colour="California")) +
+  scale_colour_manual("",
+                      breaks = c("Florida", "New York", "California"),
+                      values = c("darkred", "darkgreen", "steelblue")) +
+  xlab(" ") + ylab("Cases") + scale_y_log10()
+```
+
+## R4DS Height vs Earnings
+```{r}
+heights_df <- read.csv("heights.csv")
+ggplot(heights_df, aes(x=height, y=earn), group=1) + geom_point()+ geom_boxplot()
+```
+
+# Tables
+
+## Knitr Table with Kable
+```{r}
+knitr::kable(head(mtcars[, 1:4]), "simple")
+```
+
+## Pandoc Table
+```{r}
+m <- mtcars[1:3, 1:4]
+#pandoc.table(m, style = 'simple')
+# I worked to figure out pandoc for at least an hour before giving up. Would be nice to have some 
+# resources on how to get it to work
+```
+
+# References
